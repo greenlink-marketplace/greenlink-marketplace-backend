@@ -38,6 +38,7 @@ source venv/bin/activate  # ou venv\Scripts\activate no Windows
 pip install -r requirements.txt
 ```
 
+<<<<<<< HEAD
 ### 4. Configure as variáveis de ambiente com um arquivo `.env`:
 
 Crie um arquivo chamado `.env` na raiz do projeto com o seguinte conteúdo:
@@ -55,6 +56,29 @@ DB_PORT=posta_do_seu_bd
 ```
 
 ⚠️ **Importante:** nunca comite o arquivo `.env` no repositório. Certifique-se de que ele está listado no `.gitignore`.
+=======
+### 4. Configure variáveis de ambiente:
+
+```bash
+DEBUG=True
+SECRET_KEY=sua_chave_secreta
+ALLOWED_HOSTS=127.0.0.1,localhost
+DATABASE_URL=postgres://usuario:senha@localhost:5432/greenlink
+```
+
+Dica: você pode usar o pacote python-decouple ou django-environ para carregar variáveis do .env.
+
+### 4. Configure variáveis de ambiente:
+
+```bash
+DEBUG=True
+SECRET_KEY=sua_chave_secreta
+ALLOWED_HOSTS=127.0.0.1,localhost
+DATABASE_URL=postgres://usuario:senha@localhost:5432/greenlink
+```
+
+Dica: você pode usar o pacote python-decouple ou django-environ para carregar variáveis do .env.
+>>>>>>> 6d72243bf80770720653559233c0235be9e66be3
 
 ### 5. Execute as migrações:
 
@@ -74,8 +98,11 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+<<<<<<< HEAD
 ---
 
+=======
+>>>>>>> 6d72243bf80770720653559233c0235be9e66be3
 ## 📡 Endpoints da API
 
 Após subir o servidor, os endpoints estarão disponíveis em:
@@ -86,6 +113,7 @@ http://127.0.0.1:8000/api/
 
 Endpoints principais:
 
+<<<<<<< HEAD
 - `/api/users/` – Gerenciamento de usuários
 - `/api/materials/` – Anúncios e materiais recicláveis
 - `/api/transactions/` – Transações e trocas
@@ -94,6 +122,17 @@ Endpoints principais:
 > A documentação interativa da API está disponível via Django REST Framework Browsable API (ou Swagger, se configurado).
 
 ---
+=======
+/api/users/ – Gerenciamento de usuários
+
+/api/materials/ – Anúncios e materiais recicláveis
+
+/api/transactions/ – Transações e trocas
+
+/api/rewards/ – Sistema de pontos e recompensas
+
+Nota: documentação interativa da API disponível via DRF Browsable API ou Swagger se configurado.
+>>>>>>> 6d72243bf80770720653559233c0235be9e66be3
 
 ## 🧪 Testes
 
@@ -103,12 +142,16 @@ Para rodar os testes automatizados:
 python manage.py test
 ```
 
+<<<<<<< HEAD
 ---
 
+=======
+>>>>>>> 6d72243bf80770720653559233c0235be9e66be3
 ## 📦 Deploy (em construção)
 
 Planejamos utilizar:
 
+<<<<<<< HEAD
 - Docker
 - PostgreSQL
 - Gunicorn + Nginx
@@ -125,3 +168,18 @@ Rodrigo Cruz ([@rodrig-crzz](https://github.com/rodrig-crzz)) — Desenvolvedor 
 ---
 
 Vamos construir um futuro mais sustentável juntos! 🌱
+=======
+Docker
+
+PostgreSQL
+
+Gunicorn + Nginx
+
+Railway / Render / VPS próprio
+
+Guia de deploy em breve.
+
+## 👥 Contribuidores
+
+Rodrigo Cruz (@rodrig-crzz) — Desenvolvedor principal
+>>>>>>> 6d72243bf80770720653559233c0235be9e66be3
