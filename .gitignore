@@ -1,0 +1,44 @@
+# Banco de dados
+db.sqlite3
+
+# Bytecode python
+__pycache__/
+*.pyc
+*.pyo
+
+# Chave secreta e variáveis de ambiente
+secret_key.txt
+.env
+
+# Arquivos de mídia (upload)
+media/
+# Permite rastrear apenas o arquivo media.txt (como você mencionou)
+
+# Arquivos estáticos (coletados)
+static/
+
+# Logs
+log/
+*.log
+
+# Ambiente virtual
+venv/
+
+# IDEs
+.idea/
+.vscode/
+
+# Cache de migração
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Cobertura de testes
+htmlcov/
+.coverage
+nosetests.xml
+coverage.xml
