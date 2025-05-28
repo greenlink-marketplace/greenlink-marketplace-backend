@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from decouple import config
 from datetime import timedelta
+from corsheaders import _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,7 +46,8 @@ INSTALLED_APPS = [
     'marketplace',
     'recycling',
     'rest_framework',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'greenlink_backend.urls'
@@ -157,3 +160,15 @@ SIMPLE_JWT = {
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
     "ALGORITHM": "HS256",
 }
+
+CORS_ALLOWED_ORIGINS = [
+    # Local development origin (remove before deploying to production)
+    "http://localhost:8081",
+    "http://localhost:3000",
+    
+    # Production origin
+    "https://greenlink.app.br" # hosted frontend
+]
+
+# requests involving authentication
+CORS_ALLOW_CREDENTIALS = True
