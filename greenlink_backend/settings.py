@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-9o1vk6dhf&c0aqs@u5o1r0pn+866^)ph20elud+y$hzf@+fd(8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['greenlink.app.br', '172.31.35.137']
+ALLOWED_HOSTS = ['127.0.0.1', 'greenlink.app.br', '172.31.35.137']
 
 
 # Application definition
@@ -125,7 +125,7 @@ AUTHENTICATION_BACKENDS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'America/Sao_Paulo'
 
