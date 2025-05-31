@@ -78,14 +78,10 @@ http://127.0.0.1:8000/api/
 
 Endpoints principais:
 
-- `/api/accounts/` – Gerenciamento de usuários
-Inclui endpoints para autenticação, cadastro, perfil, permissões e gerenciamento de credenciais.
-- `/api/marketplace/` – Gerenciamento do marketplace
-Engloba o cadastro, busca e visualização de produtos, além da interação entre consumidores e empresas.
-- `/api/recycling/` – Gerenciamento de processos de reciclagem
-Controle de operações de coleta, resíduos, recicladoras, e pontos de coleta.
-- `/api/core/` – Gerenciamento de configurações e administração
-Inclui funcionalidades centrais do sistema, configurações administrativas, dados de contato/bancários e comprovantes.
+- `/api/accounts/` – Gerenciamento de usuários: Inclui endpoints para autenticação, cadastro, perfil, permissões e gerenciamento de credenciais.
+- `/api/marketplace/` – Gerenciamento do marketplace: Engloba o cadastro, busca e visualização de produtos, além da interação entre consumidores e empresas.
+- `/api/recycling/` – Gerenciamento de processos de reciclagem: Controle de operações de coleta, resíduos, recicladoras, e pontos de coleta.
+- `/api/core/` – Gerenciamento de configurações e administração: Inclui funcionalidades centrais do sistema, configurações administrativas, dados de contato/bancários e comprovantes.
 
 ## 🧪 Testes
 
