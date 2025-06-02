@@ -10,9 +10,9 @@ Este repositório contém o backend da plataforma **GreenLink Marketplace**, des
 - [Django 4.x](https://www.djangoproject.com/)
 - [Django REST Framework](https://www.django-rest-framework.org/)
 - [PostgreSQL](https://www.postgresql.org/)
-- [Docker (opcional)](https://www.docker.com/)
 - [Gunicorn + Nginx (para deploy)](https://gunicorn.org/)
 - [python-decouple](https://github.com/henriquebastos/python-decouple)
+- [djangorestframework-simplejwt](https://github.com/jazzband/djangorestframework-simplejwt)
 
 ---
 
@@ -38,47 +38,17 @@ source venv/bin/activate  # ou venv\Scripts\activate no Windows
 pip install -r requirements.txt
 ```
 
-<<<<<<< HEAD
 ### 4. Configure as variáveis de ambiente com um arquivo `.env`:
 
 Crie um arquivo chamado `.env` na raiz do projeto com o seguinte conteúdo:
 
 ```ini
-DEBUG=True
-SECRET_KEY=sua_chave_secreta
-ALLOWED_HOSTS=127.0.0.1,localhost
-
 DB_NAME=nome_do_seu_bd
 DB_USER=seu_usuario
 DB_PASSWORD=sua_senha
 DB_HOST=host_do_seu_bd
 DB_PORT=posta_do_seu_bd
 ```
-
-⚠️ **Importante:** nunca comite o arquivo `.env` no repositório. Certifique-se de que ele está listado no `.gitignore`.
-=======
-### 4. Configure variáveis de ambiente:
-
-```bash
-DEBUG=True
-SECRET_KEY=sua_chave_secreta
-ALLOWED_HOSTS=127.0.0.1,localhost
-DATABASE_URL=postgres://usuario:senha@localhost:5432/greenlink
-```
-
-Dica: você pode usar o pacote python-decouple ou django-environ para carregar variáveis do .env.
-
-### 4. Configure variáveis de ambiente:
-
-```bash
-DEBUG=True
-SECRET_KEY=sua_chave_secreta
-ALLOWED_HOSTS=127.0.0.1,localhost
-DATABASE_URL=postgres://usuario:senha@localhost:5432/greenlink
-```
-
-Dica: você pode usar o pacote python-decouple ou django-environ para carregar variáveis do .env.
->>>>>>> 6d72243bf80770720653559233c0235be9e66be3
 
 ### 5. Execute as migrações:
 
@@ -98,11 +68,6 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-<<<<<<< HEAD
----
-
-=======
->>>>>>> 6d72243bf80770720653559233c0235be9e66be3
 ## 📡 Endpoints da API
 
 Após subir o servidor, os endpoints estarão disponíveis em:
@@ -113,26 +78,10 @@ http://127.0.0.1:8000/api/
 
 Endpoints principais:
 
-<<<<<<< HEAD
-- `/api/users/` – Gerenciamento de usuários
-- `/api/materials/` – Anúncios e materiais recicláveis
-- `/api/transactions/` – Transações e trocas
-- `/api/rewards/` – Sistema de pontos e recompensas
-
-> A documentação interativa da API está disponível via Django REST Framework Browsable API (ou Swagger, se configurado).
-
----
-=======
-/api/users/ – Gerenciamento de usuários
-
-/api/materials/ – Anúncios e materiais recicláveis
-
-/api/transactions/ – Transações e trocas
-
-/api/rewards/ – Sistema de pontos e recompensas
-
-Nota: documentação interativa da API disponível via DRF Browsable API ou Swagger se configurado.
->>>>>>> 6d72243bf80770720653559233c0235be9e66be3
+- `/api/accounts/` – Gerenciamento de usuários: Inclui endpoints para autenticação, cadastro, perfil, permissões e gerenciamento de credenciais.
+- `/api/marketplace/` – Gerenciamento do marketplace: Engloba o cadastro, busca e visualização de produtos, além da interação entre consumidores e empresas.
+- `/api/recycling/` – Gerenciamento de processos de reciclagem: Controle de operações de coleta, resíduos, recicladoras, e pontos de coleta.
+- `/api/core/` – Gerenciamento de configurações e administração: Inclui funcionalidades centrais do sistema, configurações administrativas, dados de contato/bancários e comprovantes.
 
 ## 🧪 Testes
 
@@ -142,20 +91,11 @@ Para rodar os testes automatizados:
 python manage.py test
 ```
 
-<<<<<<< HEAD
----
-
-=======
->>>>>>> 6d72243bf80770720653559233c0235be9e66be3
 ## 📦 Deploy (em construção)
 
 Planejamos utilizar:
 
-<<<<<<< HEAD
-- Docker
-- PostgreSQL
 - Gunicorn + Nginx
-- Railway / Render / VPS próprio
 
 Guia de deploy em breve.
 
@@ -168,18 +108,3 @@ Rodrigo Cruz ([@rodrig-crzz](https://github.com/rodrig-crzz)) — Desenvolvedor 
 ---
 
 Vamos construir um futuro mais sustentável juntos! 🌱
-=======
-Docker
-
-PostgreSQL
-
-Gunicorn + Nginx
-
-Railway / Render / VPS próprio
-
-Guia de deploy em breve.
-
-## 👥 Contribuidores
-
-Rodrigo Cruz (@rodrig-crzz) — Desenvolvedor principal
->>>>>>> 6d72243bf80770720653559233c0235be9e66be3
