@@ -77,3 +77,22 @@ class ConsumerRegistrationSerializer(serializers.ModelSerializer):
         consumer = Consumer.objects.create(user=user, **validated_data)
 
         return consumer
+
+class ProductListSerializer(serializers.ModelSerializer):
+    category = serializers.StringRelatedField()
+    company = serializers.StringRelatedField()
+
+    class Meta:
+        model = Product
+        fields = [
+            'id',
+            'name',
+            'description',
+            'price_cents',
+            'quantity',
+            'purchase_contact',
+            'category',
+            'company',
+            'is_sustainable',
+            'created_at',
+        ]
