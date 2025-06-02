@@ -1,17 +1,13 @@
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import status
-from marketplace.serializers import ConsumerRegistrationSerializer
-
-from rest_framework.generics import ListAPIView
-from .models import Product
-from .serializers import ProductListSerializer
-from rest_framework.pagination import PageNumberPagination
-
-from rest_framework import generics, filters
-from .models import Product
-from .serializers import ProductListSerializer
-from rest_framework.pagination import PageNumberPagination
+from marketplace.serializers import (
+    ConsumerRegistrationSerializer,
+    ProductListSerializer
+)
+from marketplace.models import Product
 
 class ConsumerRegistrationView(CreateAPIView):
     serializer_class = ConsumerRegistrationSerializer
@@ -35,10 +31,10 @@ class ProductListView(ListAPIView):
     def get_queryset(self):
         return Product.objects.filter(is_active=True).order_by('-created_at')
 
-class ProductSearchView(generics.ListAPIView):
+class ProductSearchView(ListAPIView):
     serializer_class = ProductListSerializer
     pagination_class = ProductPagination
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [SearchFilter]
     search_fields = ['name', 'description']
 
     def get_queryset(self):
