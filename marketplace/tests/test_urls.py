@@ -4,7 +4,7 @@ from django.urls import reverse
 class RegisterConsumerPostTestCase(TestCase):
     def setUp(self):
         self.client = Client()
-        self.url = reverse("consumer-register")
+        self.url = reverse("register-consumer")
         self.valid_payload = {
             "username": "user_test",
             "email": "emailtest@gmail.com",
