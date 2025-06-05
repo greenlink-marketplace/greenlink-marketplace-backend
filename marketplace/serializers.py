@@ -79,9 +79,6 @@ class ConsumerRegistrationSerializer(serializers.ModelSerializer):
         return consumer
 
 class ProductListSerializer(serializers.ModelSerializer):
-    category = serializers.StringRelatedField()
-    company = serializers.StringRelatedField()
-
     class Meta:
         model = Product
         fields = [
@@ -89,12 +86,6 @@ class ProductListSerializer(serializers.ModelSerializer):
             'name',
             'description',
             'price_cents',
-            'quantity',
-            'purchase_contact',
-            'category',
-            'company',
-            'is_sustainable',
-            'created_at',
         ]
 
 class ProductRetrieveSerializer(serializers.ModelSerializer):
