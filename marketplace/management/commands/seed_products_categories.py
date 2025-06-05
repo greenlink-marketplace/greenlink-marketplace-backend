@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from marketplace.models import ProductCategory
 from faker import Faker
 
-faker = Faker("pt_BR")
+fake = Faker()
 
 class Command(BaseCommand):
     help = 'Populates the database with dummy data for ProductCategory'
@@ -22,7 +22,7 @@ class Command(BaseCommand):
                 continue
             ProductCategory.objects.create(
                 name=name_category,
-                description=faker.sentence(nb_words=8)
+                description=fake.sentence(nb_words=8)
             )
 
         self.stdout.write(

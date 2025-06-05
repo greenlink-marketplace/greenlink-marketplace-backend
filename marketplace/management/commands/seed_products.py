@@ -3,7 +3,7 @@ from marketplace.models import Product, ProductCategory, Company
 from faker import Faker
 import random
 
-faker = Faker("pt_BR")
+fake = Faker()
 
 class Command(BaseCommand):
     help = 'Populates the database with dummy data for Company, ProductCategory and Product'
@@ -14,18 +14,18 @@ class Command(BaseCommand):
         
         # Create products
         for _ in range(30):
-            name_product = faker.word().capitalize()
+            name_product = fake.word().capitalize()
             while Product.objects.filter(name=name_product).exists():
-                name_product = faker.word().capitalize()
+                name_product = fake.word().capitalize()
             
             Product.objects.create(
                 company=random.choice(companies_objs),
                 category=random.choice(products_categories_objs),
                 name=name_product,
-                description=faker.text(max_nb_chars=100),
+                description=fake.text(max_nb_chars=100),
                 price_cents=random.randint(500, 20000),  # R$5,00 to R$200,00
                 quantity=random.randint(1, 20),
-                purchase_contact=faker.email(),
+                purchase_contact=fake.email(),
                 is_active=True,
                 is_sustainable=random.choice([True, False]),
             )

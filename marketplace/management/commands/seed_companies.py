@@ -6,7 +6,7 @@ from validate_docbr import CNPJ
 import secrets
 import string
 
-fake = Faker("pt_BR")
+fake = Faker()
 cnpj = CNPJ()
 
 def generate_password(length=10):
