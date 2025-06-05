@@ -48,10 +48,24 @@ class ProductListView(ListAPIView):
     def get_queryset(self):
         return Product.objects.filter(is_active=True).order_by('-created_at')
 
+class NonEmptySearchFilter(SearchFilter):
+    def get_search_terms(self, request):
+        # Call the original SearchFilter method to get the search terms.
+        search_terms = super().get_search_terms(request)
+
+        # If the list of search terms is empty (meaning that
+        # the 'search' parameter was not provided or was empty after trim),
+        # we raise a ValidationError.
+        if not search_terms:
+            raise ValidationError(
+                {"search": "This field is required."}
+            )
+        return search_terms
+
 class ProductSearchView(ListAPIView):
     serializer_class = ProductListSerializer
     pagination_class = ProductPagination
-    filter_backends = [SearchFilter]
+    filter_backends = [NonEmptySearchFilter]
     search_fields = ['name', 'description']
 
     def get_queryset(self):
