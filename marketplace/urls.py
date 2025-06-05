@@ -5,7 +5,8 @@ from marketplace.views import (
     ProductSearchView,
     ConsumerSavedProductListView,
     ConsumerSavedProductCreateView,
-    ConsumerSavedProductDestroyView
+    ConsumerSavedProductDestroyView,
+    ProductRetrieveView,
 )
 
 urlpatterns = [
@@ -18,6 +19,9 @@ urlpatterns = [
     path('products/search/', 
          ProductSearchView.as_view(), 
          name='product-search'),
+    path('products/<int:pk>/',
+         ProductRetrieveView.as_view(),
+         name='product-detail'),
     path('saved-products/list/',
          ConsumerSavedProductListView.as_view(),
          name='saved-products-list'),

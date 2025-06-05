@@ -1,18 +1,23 @@
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
-    DestroyAPIView
+    DestroyAPIView,
+    RetrieveAPIView,
 )
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly
+) 
 from rest_framework.exceptions import ValidationError, APIException
 from rest_framework import status
 from django.db.utils import IntegrityError
 from marketplace.serializers import (
     ConsumerRegistrationSerializer,
     ProductListSerializer,
+    ProductRetrieveSerializer,
     ConsumerSavedProductListSerializer,
     ConsumerSavedProductCreateSerializer
 )
@@ -51,6 +56,11 @@ class ProductSearchView(ListAPIView):
 
     def get_queryset(self):
         return Product.objects.filter(is_active=True).order_by('-created_at')
+
+class ProductRetrieveView(RetrieveAPIView):
+    queryset = Product.objects.filter(is_active=True)
+    serializer_class = ProductRetrieveSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 class ConsumerSavedProductListView(ListAPIView):
     serializer_class = ConsumerSavedProductListSerializer

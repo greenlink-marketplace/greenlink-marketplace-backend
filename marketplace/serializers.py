@@ -97,6 +97,39 @@ class ProductListSerializer(serializers.ModelSerializer):
             'created_at',
         ]
 
+class ProductRetrieveSerializer(serializers.ModelSerializer):
+    # Field to indicate whether the product is saved by the logged in consumer
+    is_saved_by_consumer = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'description',
+                  'price_cents', 'quantity', 'purchase_contact',
+                  'category', 'company', 'is_sustainable',
+                  'created_at', 'is_saved_by_consumer']
+
+    def get_is_saved_by_consumer(self, obj):
+        # self.context['request'] contains the view's request object
+        request = self.context.get('request')
+
+        # If there is no request or the user is not authenticated, or
+        # is not a consumer, returns False
+        if not request or not request.user.is_authenticated:
+            return None
+
+        # Checks if the authenticated user has an associated Consumer object
+        try:
+            consumer = request.user.consumer
+        except Consumer.DoesNotExist:
+            return None # Authenticated user is not a consumer
+
+        # Checks if a record exists in ConsumerSavedProduct
+        # for this product and this consumer
+        return ConsumerSavedProduct.objects.filter(
+            consumer=consumer,
+            product=obj # obj is the current Product instance being serialized
+        ).exists()
+
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
