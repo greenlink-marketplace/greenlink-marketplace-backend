@@ -96,3 +96,26 @@ class ProductListSerializer(serializers.ModelSerializer):
             'is_sustainable',
             'created_at',
         ]
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = "__all__"
+
+class ConsumerSavedProductListSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+
+    class Meta:
+        model = ConsumerSavedProduct
+        fields = ['id', 'product', 'saved_at']
+
+class ConsumerSavedProductCreateSerializer(serializers.ModelSerializer):
+    product_id = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all(),
+        source='product'
+    )
+    
+    class Meta:
+        model = ConsumerSavedProduct
+        fields = ['id', 'product_id', 'saved_at']
+        read_only_fields = ['id', 'saved_at']

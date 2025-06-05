@@ -1,13 +1,25 @@
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    DestroyAPIView
+)
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import ValidationError, APIException
 from rest_framework import status
+from django.db.utils import IntegrityError
 from marketplace.serializers import (
     ConsumerRegistrationSerializer,
-    ProductListSerializer
+    ProductListSerializer,
+    ConsumerSavedProductListSerializer,
+    ConsumerSavedProductCreateSerializer
 )
-from marketplace.models import Product
+from marketplace.models import (
+    Product,
+    ConsumerSavedProduct,
+)
 
 class ConsumerRegistrationView(CreateAPIView):
     serializer_class = ConsumerRegistrationSerializer
@@ -39,3 +51,32 @@ class ProductSearchView(ListAPIView):
 
     def get_queryset(self):
         return Product.objects.filter(is_active=True).order_by('-created_at')
+
+class ConsumerSavedProductListView(ListAPIView):
+    serializer_class = ConsumerSavedProductListSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return ConsumerSavedProduct.objects.filter(
+            consumer__user=self.request.user
+        )
+
+class ConsumerSavedProductCreateView(CreateAPIView):
+    queryset = ConsumerSavedProduct.objects.all()
+    serializer_class = ConsumerSavedProductCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        try:
+            serializer.save(consumer=self.request.user.consumer)
+        except IntegrityError:
+            raise ValidationError({"detail": "This product has already been saved by this consumer."})
+        except Exception:
+            raise APIException("An unexpected error occurred while saving the product.")
+
+class ConsumerSavedProductDestroyView(DestroyAPIView):
+    queryset = ConsumerSavedProduct.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(consumer=self.request.user.consumer)
