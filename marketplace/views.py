@@ -32,9 +32,9 @@ class ConsumerRegistrationView(CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProductPagination(PageNumberPagination):
-    page_size = 10
-    page_size_query_param = 'page_size'
-    max_page_size = 50
+    page_size = 60
+    page_size_query_param = None
+    max_page_size = None
 
 class ProductListView(ListAPIView):
     serializer_class = ProductListSerializer
