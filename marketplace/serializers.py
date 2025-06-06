@@ -78,6 +78,12 @@ class ConsumerRegistrationSerializer(serializers.ModelSerializer):
 
         return consumer
 
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = "__all__"
+
 class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
@@ -88,6 +94,8 @@ class ProductListSerializer(serializers.ModelSerializer):
             'price_cents',
         ]
 
+# FIXME: Modify serializer to use the ProductSerializer on the product
+#  field. So Meta.fields will be ['product', 'is_saved_by_consumer'].
 class ProductRetrieveSerializer(serializers.ModelSerializer):
     # Field to indicate whether the product is saved by the logged in consumer
     is_saved_by_consumer = serializers.SerializerMethodField()
@@ -121,13 +129,8 @@ class ProductRetrieveSerializer(serializers.ModelSerializer):
             product=obj # obj is the current Product instance being serialized
         ).exists()
 
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = "__all__"
-
 class ConsumerSavedProductListSerializer(serializers.ModelSerializer):
-    product = ProductSerializer()
+    product = ProductListSerializer()
 
     class Meta:
         model = ConsumerSavedProduct
