@@ -78,11 +78,14 @@ class ConsumerRegistrationSerializer(serializers.ModelSerializer):
 
         return consumer
 
-
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = "__all__"
+# NOTE: Deprecated Serializer
+# class ProductSerializer(serializers.ModelSerializer):
+#     category = serializers.StringRelatedField()
+#     company = serializers.StringRelatedField()
+    
+#     class Meta:
+#         model = Product
+#         fields = "__all__"
 
 class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -94,18 +97,18 @@ class ProductListSerializer(serializers.ModelSerializer):
             'price_cents',
         ]
 
-# FIXME: Modify serializer to use the ProductSerializer on the product
-#  field. So Meta.fields will be ['product', 'is_saved_by_consumer'].
 class ProductRetrieveSerializer(serializers.ModelSerializer):
+    category = serializers.StringRelatedField()
+    company = serializers.StringRelatedField()
     # Field to indicate whether the product is saved by the logged in consumer
     is_saved_by_consumer = serializers.SerializerMethodField()
-
+    
     class Meta:
         model = Product
         fields = ['id', 'name', 'description',
                   'price_cents', 'quantity', 'purchase_contact',
                   'category', 'company', 'is_sustainable',
-                  'created_at', 'is_saved_by_consumer']
+                  'created_at', 'is_saved_by_consumer']        
 
     def get_is_saved_by_consumer(self, obj):
         # self.context['request'] contains the view's request object
