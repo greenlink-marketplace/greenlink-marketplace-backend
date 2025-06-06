@@ -28,7 +28,7 @@ urlpatterns = [
     path('saved-products/add/',
          ConsumerSavedProductCreateView.as_view(),
          name='saved-product-add'),
-    path('saved-products/delete/<int:pk>/',
+    path('saved-products/delete/<int:product_id>/',
          ConsumerSavedProductDestroyView.as_view(),
          name='saved-product-delete'),
 ]

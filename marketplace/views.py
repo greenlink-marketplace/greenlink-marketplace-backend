@@ -101,6 +101,8 @@ class ConsumerSavedProductCreateView(CreateAPIView):
 class ConsumerSavedProductDestroyView(DestroyAPIView):
     queryset = ConsumerSavedProduct.objects.all()
     permission_classes = [IsAuthenticated]
+    lookup_field = "product"
+    lookup_url_kwarg = "product_id"
 
     def get_queryset(self):
         return self.queryset.filter(consumer=self.request.user.consumer)
