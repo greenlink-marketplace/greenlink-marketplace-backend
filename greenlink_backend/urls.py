@@ -21,7 +21,7 @@ api_urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("marketplace/", include("marketplace.urls")),
     # path("core/", include("core.urls")),
-    # path("recycling/", include("recycling.urls")),
+    path("recycling/", include("recycling.urls")),
 ]
 
 urlpatterns = [
