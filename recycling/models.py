@@ -112,6 +112,6 @@ class MaterialPrice(models.Model):
                            'recyclable_material_category')
 
     def __str__(self):
-        price = self.price_cents_kg / 100
+        price = self.price_per_kg_cents / 100
         return (f"Price for {self.recyclable_material_category.name} "
                 f"at {self.recycling_location.name}: R${price:.2f}/kg")
