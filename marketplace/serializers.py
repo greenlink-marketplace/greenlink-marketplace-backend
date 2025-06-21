@@ -42,15 +42,15 @@ class ConsumerRegistrationSerializer(serializers.ModelSerializer):
         ]
 
     def validate_cpf(self, value):
-        if not isinstance(value, str):
-            raise serializers.ValidationError("Invalid CPF.")
-        # Regular expression for the format xxx.xxx.xxx-xx
-        regex_cpf = r'^\d{3}\.\d{3}\.\d{3}-\d{2}$'
-        if not re.match(regex_cpf, value):
-            raise serializers.ValidationError("Invalid CPF.")
-        cpf = CPF()
-        if not cpf.validate(value):
-            raise serializers.ValidationError("Invalid CPF.")
+        # if not isinstance(value, str):
+        #     raise serializers.ValidationError("Invalid CPF.")
+        # # Regular expression for the format xxx.xxx.xxx-xx
+        # regex_cpf = r'^\d{3}\.\d{3}\.\d{3}-\d{2}$'
+        # if not re.match(regex_cpf, value):
+        #     raise serializers.ValidationError("Invalid CPF.")
+        # cpf = CPF()
+        # if not cpf.validate(value):
+        #     raise serializers.ValidationError("Invalid CPF.")
         return value
 
     def create(self, validated_data):
