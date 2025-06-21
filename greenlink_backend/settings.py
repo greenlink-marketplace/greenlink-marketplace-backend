@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'core',
     'marketplace',
     'recycling',
+    'common',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',

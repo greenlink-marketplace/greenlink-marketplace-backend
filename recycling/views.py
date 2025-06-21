@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.http import Http404
+from django.contrib.auth import get_user_model
 from rest_framework.generics import (
     GenericAPIView,
     ListAPIView,
@@ -24,7 +25,7 @@ from recycling.serializers import (
 )
 from recycling.services import RecyclableMaterialServices
 from marketplace.models import Consumer
-from django.contrib.auth import get_user_model
+from common.filters import NonEmptySearchFilter
 
 User = get_user_model()
 
@@ -118,7 +119,7 @@ class AvailableMaterialCategoriesView(ListAPIView):
 class ConsumerSearchView(ListAPIView):
     serializer_class = ConsumerSummarySerializer
     permission_classes = [IsAuthenticated]
-    filter_backends = [SearchFilter]
+    filter_backends = [NonEmptySearchFilter]
     search_fields = [
         'user__username',
         'cpf'
