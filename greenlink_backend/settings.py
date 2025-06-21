@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'django_filters',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -155,9 +156,19 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_FILTER_BACKENDS': {
+    'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
-    }
+    ),
+    'DEFAULT_SCHEMA_CLASS': (
+        'drf_spectacular.openapi.AutoSchema'
+    ),
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Minha Aplicação de Reciclagem API',
+    'DESCRIPTION': 'Documentação da API para o Projeto de Reciclagem.',
+    'VERSION': '1.0.0',
+    # Outras configurações opcionais
 }
 
 SIMPLE_JWT = {

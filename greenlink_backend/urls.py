@@ -16,12 +16,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView
+)
 
 api_urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("marketplace/", include("marketplace.urls")),
     # path("core/", include("core.urls")),
     path("recycling/", include("recycling.urls")),
+    
+    # YOUR DRF-SPECTACULAR URLS
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Optional UI:
+    path('schema/swagger-ui/',
+         SpectacularSwaggerView.as_view(url_name='schema'),
+         name='swagger-ui'),
+    path('schema/redoc/',
+         SpectacularRedocView.as_view(url_name='schema'),
+         name='redoc'),
 ]
 
 urlpatterns = [
