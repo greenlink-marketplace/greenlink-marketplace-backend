@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.filters import SearchFilter
 import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from recycling.models import (
@@ -18,9 +19,14 @@ from recycling.models import (
 from recycling.serializers import (
     RecyclingLocationSerializer,
     RecyclableMaterialReceptionSerializer,
-    RecyclableMaterialCategorySerializer
+    RecyclableMaterialCategorySerializer,
+    ConsumerSummarySerializer,
 )
 from recycling.services import RecyclableMaterialServices
+from marketplace.models import Consumer
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class RecyclingLocationFilter(django_filters.FilterSet):
     latitude_min = django_filters.NumberFilter(field_name="latitude",
@@ -107,3 +113,23 @@ class AvailableMaterialCategoriesView(ListAPIView):
         return RecyclableMaterialCategory.objects.filter(
             materialprice__recycling_location=location
         ).distinct()
+
+
+class ConsumerSearchView(ListAPIView):
+    serializer_class = ConsumerSummarySerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'user__username',
+        'cpf'
+    ]
+
+    def get_queryset(self):
+        user = self.request.user
+
+        # If the user is not a recycling manager, the queryset will be empty,
+        #  preventing him from performing any search.
+        if user.role != User.UserRole.RECYCLING_MANAGER:
+            return Consumer.objects.none()
+
+        return Consumer.objects.select_related('user')

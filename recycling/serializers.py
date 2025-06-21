@@ -4,6 +4,9 @@ from recycling.models import (
     RecyclableMaterialCategory
 )
 from marketplace.models import Consumer
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class RecyclingLocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,3 +40,11 @@ class RecyclableMaterialReceptionSerializer(serializers.Serializer):
         source='consumer_obj',
         required=False
     )
+
+
+class ConsumerSummarySerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="user.username")
+
+    class Meta:
+        model = Consumer
+        fields = ["pk", "username"]

@@ -3,6 +3,7 @@ from recycling.views import (
     RecyclingLocationListView,
     MaterialReceptionView,
     AvailableMaterialCategoriesView,
+    ConsumerSearchView,
 )
 
 urlpatterns = [
@@ -15,6 +16,8 @@ urlpatterns = [
     path(
         "available-material-categories/",
         AvailableMaterialCategoriesView.as_view(),
-        name="available-material-categories"
-    )
+        name="available-material-categories"),
+    path("consumers/search/",
+         ConsumerSearchView.as_view(),
+         name="consumer-search"),
 ]
