@@ -1,7 +1,8 @@
 from django.urls import path
 from recycling.views import (
     RecyclingLocationListView,
-    MaterialReceptionView
+    MaterialReceptionView,
+    AvailableMaterialCategoriesView,
 )
 
 urlpatterns = [
@@ -11,4 +12,9 @@ urlpatterns = [
     path("receive-material/",
          MaterialReceptionView.as_view(),
          name="receive-material"),
+    path(
+        "available-material-categories/",
+        AvailableMaterialCategoriesView.as_view(),
+        name="available-material-categories"
+    )
 ]

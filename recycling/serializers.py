@@ -18,6 +18,12 @@ class RecyclingLocationSerializer(serializers.ModelSerializer):
         ]
 
 
+class RecyclableMaterialCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecyclableMaterialCategory
+        fields = ["id", "name"]
+
+
 class RecyclableMaterialReceptionSerializer(serializers.Serializer):
     category_id = serializers.PrimaryKeyRelatedField(
         queryset = RecyclableMaterialCategory.objects.all(),

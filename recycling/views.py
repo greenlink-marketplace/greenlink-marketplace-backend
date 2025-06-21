@@ -7,15 +7,18 @@ from rest_framework.generics import (
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.exceptions import PermissionDenied
 import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from recycling.models import (
     RecyclingLocation,
-    RecyclingManager
+    RecyclingManager,
+    RecyclableMaterialCategory,
 )
 from recycling.serializers import (
     RecyclingLocationSerializer,
     RecyclableMaterialReceptionSerializer,
+    RecyclableMaterialCategorySerializer
 )
 from recycling.services import RecyclableMaterialServices
 
@@ -82,3 +85,25 @@ class MaterialReceptionView(GenericAPIView):
                 {"detail": str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class AvailableMaterialCategoriesView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = RecyclableMaterialCategorySerializer
+
+    def get_queryset(self):
+        user = self.request.user
+
+        # Verify if user is a recycling manager
+        try:
+            manager = RecyclingManager.objects.get(user=user)
+        except RecyclingManager.DoesNotExist:
+            raise PermissionDenied(
+                "You must be a Recycling Manager to access this resource."
+            )
+
+        # Filters categories that have a price for the manager's location
+        location = manager.recycling_location
+        return RecyclableMaterialCategory.objects.filter(
+            materialprice__recycling_location=location
+        ).distinct()
