@@ -49,6 +49,9 @@ class Product(models.Model):
     )
     quantity = models.PositiveIntegerField()
     purchase_contact = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='products_images/',
+                              null=True,
+                              blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_sustainable = models.BooleanField(default=False)
