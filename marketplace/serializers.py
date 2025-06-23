@@ -149,3 +149,20 @@ class ConsumerSavedProductCreateSerializer(serializers.ModelSerializer):
         model = ConsumerSavedProduct
         fields = ['id', 'product_id', 'saved_at']
         read_only_fields = ['id', 'saved_at']
+
+class ProductCreateSerializer(serializers.ModelSerializer):
+    category_id = serializers.PrimaryKeyRelatedField(
+        queryset=ProductCategory.objects.all(),
+        source='category'
+    )
+
+    class Meta:
+        model = Product
+        fields = [
+            'category_id',
+            'name',
+            'description',
+            'price_cents',
+            'quantity',
+            'purchase_contact',
+        ]

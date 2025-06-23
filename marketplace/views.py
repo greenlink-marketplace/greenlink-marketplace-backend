@@ -11,15 +11,21 @@ from rest_framework.permissions import (
     IsAuthenticated,
     IsAuthenticatedOrReadOnly
 ) 
-from rest_framework.exceptions import ValidationError, APIException
+from rest_framework.exceptions import (
+    ValidationError,
+    APIException,
+    PermissionDenied,
+)
 from rest_framework import status
 from django.db.utils import IntegrityError
+from django.contrib.auth import get_user_model
 from marketplace.serializers import (
     ConsumerRegistrationSerializer,
     ProductListSerializer,
     ProductRetrieveSerializer,
     ConsumerSavedProductListSerializer,
-    ConsumerSavedProductCreateSerializer
+    ConsumerSavedProductCreateSerializer,
+    ProductCreateSerializer,
 )
 from marketplace.models import (
     Product,
@@ -93,3 +99,19 @@ class ConsumerSavedProductDestroyView(DestroyAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(consumer=self.request.user.consumer)
+
+class ProductCreateView(CreateAPIView):
+    serializer_class = ProductCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        # Obtains the configured user model
+        User = get_user_model()
+
+        # Checks if the user is of the role 'COMPANY'
+        if not user.role == User.UserRole.COMPANY:
+            raise PermissionDenied("Apenas empresas podem criar produtos.")
+
+        # Associates the product with the authenticated user company
+        serializer.save(company=user.company)

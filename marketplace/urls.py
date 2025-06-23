@@ -7,6 +7,7 @@ from marketplace.views import (
     ConsumerSavedProductCreateView,
     ConsumerSavedProductDestroyView,
     ProductRetrieveView,
+    ProductCreateView,
 )
 
 urlpatterns = [
@@ -22,6 +23,9 @@ urlpatterns = [
     path('products/detail/<int:pk>/',
          ProductRetrieveView.as_view(),
          name='product-detail'),
+    path('products/create/',
+         ProductCreateView.as_view(),
+         name='product-create'),
     path('saved-products/list/',
          ConsumerSavedProductListView.as_view(),
          name='saved-products-list'),
