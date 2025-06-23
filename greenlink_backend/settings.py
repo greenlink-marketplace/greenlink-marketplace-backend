@@ -169,7 +169,9 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Minha Aplicação de Reciclagem API',
     'DESCRIPTION': 'Documentação da API para o Projeto de Reciclagem.',
     'VERSION': '1.0.0',
-    # Outras configurações opcionais
+
+    # Other optional settings
+    "COMPONENT_SPLIT_REQUEST": True,
 }
 
 SIMPLE_JWT = {
