@@ -156,6 +156,10 @@ class ProductCreateSerializer(serializers.ModelSerializer):
         source='category'
     )
 
+    # Optional image field, allowing null values
+    image = serializers.ImageField(required=False,
+                                   allow_null=True)
+
     class Meta:
         model = Product
         fields = [
@@ -165,4 +169,5 @@ class ProductCreateSerializer(serializers.ModelSerializer):
             'price_cents',
             'quantity',
             'purchase_contact',
+            'image',
         ]
