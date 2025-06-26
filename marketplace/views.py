@@ -146,18 +146,16 @@ class CouponGenerationView(GenericAPIView):
         try:
             consumer_obj = get_object_or_404(Consumer, user=request.user)
             coupon_obj = CouponServices.generate(
-                consumer_obj=consumer_obj
+                consumer_obj=consumer_obj,
                 **serializer.validated_data
             )
         except ValueError as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"detail": f"An unexpected error occurred. {str(e)}"},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        return Response({
-            "coupon_code": coupon.coupon_code,
-            "discount_value_cents": coupon.discount_value_cents,
-            "product_id": product.id,
-            "green_credit_used": green_credit,
-        }, status=status.HTTP_201_CREATED)
+        return Response(coupon_obj, status=status.HTTP_201_CREATED)
 
 class CouponListView(ListAPIView):
     permission_classes = [IsAuthenticated]
