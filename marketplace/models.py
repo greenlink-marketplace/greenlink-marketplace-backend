@@ -36,7 +36,7 @@ class ProductCategory(models.Model):
     description = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} (pk: {self.pk})"
 
 
 class Product(models.Model):
