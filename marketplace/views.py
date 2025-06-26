@@ -1,4 +1,5 @@
 from rest_framework.generics import (
+    GenericAPIView,
     CreateAPIView,
     ListAPIView,
     DestroyAPIView,
@@ -19,6 +20,7 @@ from rest_framework.exceptions import (
 from rest_framework import status
 from django.db.utils import IntegrityError
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 from marketplace.serializers import (
     ConsumerRegistrationSerializer,
     ProductListSerializer,
@@ -27,12 +29,17 @@ from marketplace.serializers import (
     ConsumerSavedProductCreateSerializer,
     ProductCreateSerializer,
     ConsumerRetrieveSerializer,
+    CouponGenerationSerializer,
 )
+from marketplace.services import CouponServices
 from marketplace.models import (
     Product,
     ConsumerSavedProduct,
+    Coupon,
+    Consumer,
 )
 from common.filters import NonEmptySearchFilter
+# from rest_framework.views import APIView
 
 class ConsumerRegistrationView(CreateAPIView):
     serializer_class = ConsumerRegistrationSerializer
@@ -124,3 +131,42 @@ class ConsumerRetrieveView(RetrieveAPIView):
     def get_object(self):
         # Retorna o registro do consumidor vinculado ao usuário autenticado
         return self.request.user.consumer
+
+class CouponGenerationView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CouponGenerationSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            consumer_obj = get_object_or_404(Consumer, user=request.user)
+            coupon_obj = CouponServices.generate(
+                consumer_obj=consumer_obj
+                **serializer.validated_data
+            )
+        except ValueError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({
+            "coupon_code": coupon.coupon_code,
+            "discount_value_cents": coupon.discount_value_cents,
+            "product_id": product.id,
+            "green_credit_used": green_credit,
+        }, status=status.HTTP_201_CREATED)
+
+class CouponListView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CouponGenerationSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        # Checks if the user is a consumer
+        if not hasattr(user, "consumer"):
+            raise PermissionDenied("Only consumers can view their coupons.")
+        # Returns only the authenticated consumer coupons
+        return Coupon.objects.filter(consumer=user.consumer)

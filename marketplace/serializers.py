@@ -172,3 +172,21 @@ class ProductCreateSerializer(serializers.ModelSerializer):
             'purchase_contact',
             'image',
         ]
+
+class CouponGenerationSerializer(serializers.Serializer):
+    product_id = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.filter(is_active=True),
+        source='product_obj'
+    )
+    green_credit_amount = serializers.IntegerField(min_value=1)
+
+class CouponListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Coupon
+        fields = [
+            'id',
+            'coupon_code',
+            'discount_value_cents',
+            'generated_at',
+            'is_valid',
+        ]

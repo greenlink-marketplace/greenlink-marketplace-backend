@@ -9,6 +9,8 @@ from marketplace.views import (
     ProductRetrieveView,
     ProductCreateView,
     ConsumerRetrieveView,
+    CouponGenerationView,
+    CouponListView,
 )
 
 urlpatterns = [
@@ -39,4 +41,10 @@ urlpatterns = [
     path('consumer/me/',
          ConsumerRetrieveView.as_view(),
          name='consumer-me'),
+    path('coupon/generate/', 
+         CouponGenerationView.as_view(), 
+         name='coupon-generate'),
+    path('coupon/list/', 
+         CouponListView.as_view(), 
+         name='coupon-list'),
 ]
