@@ -109,7 +109,7 @@ class ProductRetrieveSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'description',
                   'price_cents', 'quantity', 'purchase_contact',
                   'category', 'company', 'is_sustainable',
-                  'created_at', 'is_saved_by_consumer']        
+                  'created_at', 'is_saved_by_consumer', 'image',]        
 
     def get_is_saved_by_consumer(self, obj):
         # self.context['request'] contains the view's request object
