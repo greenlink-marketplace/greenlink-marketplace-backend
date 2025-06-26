@@ -30,6 +30,7 @@ from marketplace.serializers import (
     ProductCreateSerializer,
     ConsumerRetrieveSerializer,
     CouponGenerationSerializer,
+    CouponListSerializer,
 )
 from marketplace.services import CouponServices
 from marketplace.models import (
@@ -155,11 +156,14 @@ class CouponGenerationView(GenericAPIView):
             return Response({"detail": f"An unexpected error occurred. {str(e)}"},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        return Response(coupon_obj, status=status.HTTP_201_CREATED)
+        return Response(
+            {"detail": f"Coupon generated successfully (coupon_code: {coupon_obj.coupon_code})."},
+            status=status.HTTP_201_CREATED
+        )
 
 class CouponListView(ListAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = CouponGenerationSerializer
+    serializer_class = CouponListSerializer
     
     def get_queryset(self):
         user = self.request.user
