@@ -95,6 +95,7 @@ class ProductListSerializer(serializers.ModelSerializer):
             'name',
             'description',
             'price_cents',
+            'image',
         ]
 
 class ProductRetrieveSerializer(serializers.ModelSerializer):
