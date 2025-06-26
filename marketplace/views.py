@@ -26,6 +26,7 @@ from marketplace.serializers import (
     ConsumerSavedProductListSerializer,
     ConsumerSavedProductCreateSerializer,
     ProductCreateSerializer,
+    ConsumerRetrieveSerializer,
 )
 from marketplace.models import (
     Product,
@@ -115,3 +116,11 @@ class ProductCreateView(CreateAPIView):
 
         # Associates the product with the authenticated user company
         serializer.save(company=user.company)
+
+class ConsumerRetrieveView(RetrieveAPIView):
+    serializer_class = ConsumerRetrieveSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        # Retorna o registro do consumidor vinculado ao usuário autenticado
+        return self.request.user.consumer

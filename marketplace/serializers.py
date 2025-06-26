@@ -14,7 +14,7 @@ import re
 
 User = get_user_model()
 
-class ConsumerSerializer(serializers.ModelSerializer):
+class ConsumerRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Consumer
         fields = "__all__"

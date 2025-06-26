@@ -8,6 +8,7 @@ from marketplace.views import (
     ConsumerSavedProductDestroyView,
     ProductRetrieveView,
     ProductCreateView,
+    ConsumerRetrieveView,
 )
 
 urlpatterns = [
@@ -35,4 +36,7 @@ urlpatterns = [
     path('saved-products/delete/<int:product_id>/',
          ConsumerSavedProductDestroyView.as_view(),
          name='saved-product-delete'),
+    path('consumer/me/',
+         ConsumerRetrieveView.as_view(),
+         name='consumer-me'),
 ]
