@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.generics import (
     GenericAPIView,
     ListAPIView,
+    RetrieveAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -22,6 +23,7 @@ from recycling.serializers import (
     RecyclableMaterialReceptionSerializer,
     RecyclableMaterialCategorySerializer,
     ConsumerSummarySerializer,
+    RecyclingLocationDetailSerializer,
 )
 from recycling.services import RecyclableMaterialServices
 from marketplace.models import Consumer
@@ -134,3 +136,8 @@ class ConsumerSearchView(ListAPIView):
             return Consumer.objects.none()
 
         return Consumer.objects.select_related('user')
+
+
+class RecyclingLocationDetailView(RetrieveAPIView):
+    queryset = RecyclingLocation.objects.all()
+    serializer_class = RecyclingLocationDetailSerializer
