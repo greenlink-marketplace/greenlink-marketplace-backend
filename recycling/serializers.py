@@ -52,12 +52,16 @@ class ConsumerSummarySerializer(serializers.ModelSerializer):
 
 
 class MaterialPriceSerializer(serializers.ModelSerializer):
-    category_name = serializers.CharField(source='recyclable_material_category.name')
-    category_id = serializers.IntegerField(source='recyclable_material_category.id')
+    category_name = serializers.CharField(
+        source='recyclable_material_category.name'
+    )
+    category_description = serializers.CharField(
+        source='recyclable_material_category.description'
+    )
 
     class Meta:
         model = MaterialPrice
-        fields = ['id', 'category_id', 'category_name',
+        fields = ['id', 'category_name', 'category_description',
                   'price_per_kg_cents', 'updated_at']
 
 
