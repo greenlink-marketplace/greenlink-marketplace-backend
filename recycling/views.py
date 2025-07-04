@@ -17,6 +17,7 @@ from recycling.models import (
     RecyclingLocation,
     RecyclingManager,
     RecyclableMaterialCategory,
+    RecyclableMaterial,
 )
 from recycling.serializers import (
     RecyclingLocationSerializer,
@@ -24,6 +25,7 @@ from recycling.serializers import (
     RecyclableMaterialCategorySerializer,
     ConsumerSummarySerializer,
     RecyclingLocationDetailSerializer,
+    RecyclableMaterialSerializer,
 )
 from recycling.services import RecyclableMaterialServices
 from marketplace.models import Consumer
@@ -141,3 +143,17 @@ class ConsumerSearchView(ListAPIView):
 class RecyclingLocationDetailView(RetrieveAPIView):
     queryset = RecyclingLocation.objects.all()
     serializer_class = RecyclingLocationDetailSerializer
+
+
+class ConsumerRecyclableMaterialListView(ListAPIView):
+    serializer_class = RecyclableMaterialSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        # Ensures that the user is a consumer
+        try:
+            consumer = user.consumer
+        except AttributeError:
+            return RecyclableMaterial.objects.none()
+        return RecyclableMaterial.objects.filter(consumer=consumer)

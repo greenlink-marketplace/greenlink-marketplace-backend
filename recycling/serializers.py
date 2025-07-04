@@ -3,6 +3,7 @@ from recycling.models import (
     RecyclingLocation,
     RecyclableMaterialCategory,
     MaterialPrice,
+    RecyclableMaterial,
 )
 from marketplace.models import Consumer
 from django.contrib.auth import get_user_model
@@ -73,3 +74,9 @@ class RecyclingLocationDetailSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'address',
                   'contact', 'latitude',
                   'longitude', 'prices']
+
+
+class RecyclableMaterialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecyclableMaterial
+        fields = "__all__"
