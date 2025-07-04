@@ -82,6 +82,11 @@ class Coupon(models.Model):
         on_delete=models.SET_NULL,
         null=True,
     )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
     coupon_code = models.CharField(max_length=20, unique=True)
     discount_value_cents = models.PositiveIntegerField()
     generated_at = models.DateTimeField(auto_now_add=True)

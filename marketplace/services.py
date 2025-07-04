@@ -44,6 +44,7 @@ class CouponServices:
         # Create the coupon
         coupon_obj = Coupon.objects.create(
             consumer=consumer_obj,
+            product=product_obj,
             coupon_code=coupon_code,
             discount_value_cents=discount_value_cents
         )
