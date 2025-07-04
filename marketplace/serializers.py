@@ -181,6 +181,11 @@ class CouponGenerationSerializer(serializers.Serializer):
     green_credit_amount = serializers.IntegerField(min_value=1)
 
 class CouponListSerializer(serializers.ModelSerializer):
+    product_id = serializers.PrimaryKeyRelatedField(
+        source='product',
+        read_only=True
+    )
+
     class Meta:
         model = Coupon
         fields = [
@@ -189,4 +194,5 @@ class CouponListSerializer(serializers.ModelSerializer):
             'discount_value_cents',
             'generated_at',
             'is_valid',
+            'product_id',
         ]
