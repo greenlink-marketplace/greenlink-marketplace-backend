@@ -99,8 +99,9 @@ class ProductListSerializer(serializers.ModelSerializer):
         ]
 
 class ProductRetrieveSerializer(serializers.ModelSerializer):
-    category = serializers.StringRelatedField()
-    company = serializers.StringRelatedField()
+    category = serializers.CharField(source='category.name', read_only=True)
+    company = serializers.CharField(source='company.user.get_full_name',
+                                    read_only=True)
     # Field to indicate whether the product is saved by the logged in consumer
     is_saved_by_consumer = serializers.SerializerMethodField()
     
