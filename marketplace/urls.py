@@ -11,6 +11,7 @@ from marketplace.views import (
     ConsumerRetrieveView,
     CouponGenerationView,
     CouponListView,
+    RelatedProductsView,
 )
 
 urlpatterns = [
@@ -29,6 +30,10 @@ urlpatterns = [
     path('products/create/',
          ProductCreateView.as_view(),
          name='product-create'),
+    path('products/related/<int:pk>/',
+        RelatedProductsView.as_view(),
+        name='product-related-list'
+    ),
     path('saved-products/list/',
          ConsumerSavedProductListView.as_view(),
          name='saved-products-list'),

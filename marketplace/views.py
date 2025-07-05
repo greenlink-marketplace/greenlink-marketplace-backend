@@ -172,3 +172,15 @@ class CouponListView(ListAPIView):
             raise PermissionDenied("Only consumers can view their coupons.")
         # Returns only the authenticated consumer coupons
         return Coupon.objects.filter(consumer=user.consumer)
+
+class RelatedProductsView(ListAPIView):
+    serializer_class = ProductListSerializer
+
+    def get_queryset(self):
+        product_id = self.kwargs.get(self.lookup_field)
+        product = get_object_or_404(Product, pk=product_id, is_active=True)
+        # Related by the same category, except the product itself
+        return Product.objects.filter(
+            category=product.category,
+            is_active=True
+        ).exclude(pk=product.pk)[:30]
